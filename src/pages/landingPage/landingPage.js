@@ -1,31 +1,27 @@
-import React, {useEffect, useState} from 'react'
+import React from 'react'
 import './landingPage.css'
-import {loadScript} from '../../utils/imports'
+import useFetch from 'fetch-suspense'
+import {useLoadThirdParty} from '../../utils/useLoadThirdParty'
+import _get from 'lodash/get'
+import _padStart from 'lodash/padStart'
+
+const thirdPartyLibs = ['/assets/js/jquery.min.js', '/assets/js/browser.min.js', '/assets/js/breakpoints.min.js']
+const mediumUsername = process.env.REACT_APP_MEDIUM_USERNAME
 
 function LandingPage() {
-  const [isReady, setIsReady] = useState(false)
+  const [isReady] = useLoadThirdParty(thirdPartyLibs)
+  const mediumFeed = useFetch(`https://medium-rss.engrjabi.win/feed/${mediumUsername}`, {method: 'GET'})
+  const articles = _get(mediumFeed, 'response.items', []).filter(item => item['contentEncoded'])
 
-  useEffect(() => {
-    async function loadThirdPartyLibs() {
-      await loadScript('/assets/js/jquery.min.js')
-      await loadScript('/assets/js/browser.min.js')
-      await loadScript('/assets/js/breakpoints.min.js')
-      await require('./legacyCode')
-      setIsReady(true)
-    }
-
-    loadThirdPartyLibs()
-  }, [])
-
-  if (!isReady) {
-    return <div>Loading...</div>
+  if (isReady) {
+    require('./legacyCode')
   }
 
   return (
     <div id="wrapper">
       <header id="header">
         <div className="inner">
-          <a href="index.html" className="logo">
+          <a href="/" className="logo">
             <span className="symbol"><img src="/images/logo.svg" alt="" /></span><span
             className="title">Phantom</span>
           </a>
@@ -60,138 +56,24 @@ function LandingPage() {
               ipsum dolor sit amet nullam dolore.</p>
           </header>
           <section className="tiles">
-            <article className="style1">
-              <span className="image">
-                <img src="/images/pic01.jpg" alt="" />
-              </span>
-              <a href="generic.html">
-                <h2>Magna</h2>
-                <div className="content">
-                  <p>Sed nisl arcu euismod sit amet nisi lorem etiam dolor veroeros et feugiat.</p>
-                </div>
-              </a>
-            </article>
-            <article className="style2">
-              <span className="image">
-                <img src="/images/pic02.jpg" alt="" />
-              </span>
-              <a href="generic.html">
-                <h2>Lorem</h2>
-                <div className="content">
-                  <p>Sed nisl arcu euismod sit amet nisi lorem etiam dolor veroeros et feugiat.</p>
-                </div>
-              </a>
-            </article>
-            <article className="style3">
-              <span className="image">
-                <img src="/images/pic03.jpg" alt="" />
-              </span>
-              <a href="generic.html">
-                <h2>Feugiat</h2>
-                <div className="content">
-                  <p>Sed nisl arcu euismod sit amet nisi lorem etiam dolor veroeros et feugiat.</p>
-                </div>
-              </a>
-            </article>
-            <article className="style4">
-              <span className="image">
-                <img src="/images/pic04.jpg" alt="" />
-              </span>
-              <a href="generic.html">
-                <h2>Tempus</h2>
-                <div className="content">
-                  <p>Sed nisl arcu euismod sit amet nisi lorem etiam dolor veroeros et feugiat.</p>
-                </div>
-              </a>
-            </article>
-            <article className="style5">
-              <span className="image">
-                <img src="/images/pic05.jpg" alt="" />
-              </span>
-              <a href="generic.html">
-                <h2>Aliquam</h2>
-                <div className="content">
-                  <p>Sed nisl arcu euismod sit amet nisi lorem etiam dolor veroeros et feugiat.</p>
-                </div>
-              </a>
-            </article>
-            <article className="style6">
-              <span className="image">
-                <img src="/images/pic06.jpg" alt="" />
-              </span>
-              <a href="generic.html">
-                <h2>Veroeros</h2>
-                <div className="content">
-                  <p>Sed nisl arcu euismod sit amet nisi lorem etiam dolor veroeros et feugiat.</p>
-                </div>
-              </a>
-            </article>
-            <article className="style2">
-              <span className="image">
-                <img src="/images/pic07.jpg" alt="" />
-              </span>
-              <a href="generic.html">
-                <h2>Ipsum</h2>
-                <div className="content">
-                  <p>Sed nisl arcu euismod sit amet nisi lorem etiam dolor veroeros et feugiat.</p>
-                </div>
-              </a>
-            </article>
-            <article className="style3">
-              <span className="image">
-                <img src="/images/pic08.jpg" alt="" />
-              </span>
-              <a href="generic.html">
-                <h2>Dolor</h2>
-                <div className="content">
-                  <p>Sed nisl arcu euismod sit amet nisi lorem etiam dolor veroeros et feugiat.</p>
-                </div>
-              </a>
-            </article>
-            <article className="style1">
-              <span className="image">
-                <img src="/images/pic09.jpg" alt="" />
-              </span>
-              <a href="generic.html">
-                <h2>Nullam</h2>
-                <div className="content">
-                  <p>Sed nisl arcu euismod sit amet nisi lorem etiam dolor veroeros et feugiat.</p>
-                </div>
-              </a>
-            </article>
-            <article className="style5">
-              <span className="image">
-                <img src="/images/pic10.jpg" alt="" />
-              </span>
-              <a href="generic.html">
-                <h2>Ultricies</h2>
-                <div className="content">
-                  <p>Sed nisl arcu euismod sit amet nisi lorem etiam dolor veroeros et feugiat.</p>
-                </div>
-              </a>
-            </article>
-            <article className="style6">
-              <span className="image">
-                <img src="/images/pic11.jpg" alt="" />
-              </span>
-              <a href="generic.html">
-                <h2>Dictum</h2>
-                <div className="content">
-                  <p>Sed nisl arcu euismod sit amet nisi lorem etiam dolor veroeros et feugiat.</p>
-                </div>
-              </a>
-            </article>
-            <article className="style4">
-              <span className="image">
-                <img src="/images/pic12.jpg" alt="" />
-              </span>
-              <a href="generic.html">
-                <h2>Pretium</h2>
-                <div className="content">
-                  <p>Sed nisl arcu euismod sit amet nisi lorem etiam dolor veroeros et feugiat.</p>
-                </div>
-              </a>
-            </article>
+            {articles.map((article, index) => {
+              return (
+                <article
+                  key={index}
+                  className={`style${(index % 6) + 1}`}
+                >
+                  <span className="image">
+                    <img src={`/images/pic${_padStart((index % 12) + 1, 2, '0')}.jpg`} alt="" />
+                  </span>
+                  <a href="#">
+                    <h2>{article.obj.title}</h2>
+                    <div className="content">
+                      <p>Sed nisl arcu euismod sit amet nisi lorem etiam dolor veroeros et feugiat.</p>
+                    </div>
+                  </a>
+                </article>
+              )
+            })}
           </section>
         </div>
       </div>
