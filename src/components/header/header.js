@@ -1,16 +1,17 @@
 import React from "react";
+import { Link } from "@reach/router";
 
 function Header() {
   return (
     <>
       <header id="header">
         <div className="inner">
-          <a href="/" className="logo">
+          <Link to="/" className="logo">
             <span className="symbol">
               <img src="/images/logo.svg" alt="" />
             </span>
             <span className="title">Phantom</span>
-          </a>
+          </Link>
 
           <nav>
             <ul>
@@ -26,7 +27,7 @@ function Header() {
         <h2>Menu</h2>
         <ul>
           <li>
-            <a href="/">Home</a>
+            <Link to="/">Home</Link>
           </li>
           <li>
             <a href="/">Ipsum veroeros</a>
