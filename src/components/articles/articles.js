@@ -1,19 +1,10 @@
 import React from "react";
-import useFetch from "fetch-suspense";
-import _get from "lodash/get";
 import _padStart from "lodash/padStart";
 import { Link } from "@reach/router";
-
-const mediumUsername = process.env.REACT_APP_MEDIUM_USERNAME;
+import { useFetchArticles } from "../../utils/api";
 
 function Articles() {
-  const mediumFeed = useFetch(
-    `https://medium-rss.engrjabi.win/feed/${mediumUsername}`,
-    { method: "GET" }
-  );
-  const articles = _get(mediumFeed, "response.items", []).filter(
-    item => item["contentEncoded"]
-  );
+  const articles = useFetchArticles();
 
   return (
     <>
